@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Developer email: hiankit.work@gmail.com
+  ~ GitHub: https://github.com/bxute
+  -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/energy_level_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_label"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_toLeftOf="@+id/focus_level_text"
+        android:width="84dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="#4CAF50"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/focus_level_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_label"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:width="84dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="#2196F3"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/motivation_level_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_label"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_toRightOf="@+id/focus_level_text"
+        android:width="84dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="#CB8F1CC0"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/energy_level_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/energy_slider"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="24dp"
+        android:layout_toLeftOf="@+id/focus_level_text"
+        android:width="84dp"
+        android:gravity="center"
+        android:text="ENERGY"
+        android:textColor="#CB000000"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/focus_level_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/focus_slider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:width="84dp"
+        android:gravity="center"
+        android:text="FOCUS"
+        android:textColor="#CB000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/motivation_level_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/motivation_slider"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/focus_level_text"
+        android:gravity="center"
+        android:text="MOTIVATION"
+        android:textColor="#CB000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/stats_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Stats for this Hour"
+        android:textColor="#AE000000"
+        android:textSize="20dp" />
+
+    <com.bxute.producti.VerticalSlider
+        android:id="@+id/energy_slider"
+        android:layout_width="84dp"
+        android:layout_height="270dp"
+        android:layout_below="@+id/energy_level_text"
+        android:layout_marginTop="8sp"
+        android:layout_marginRight="24dp"
+        android:layout_toLeftOf="@+id/focus_slider"
+        android:background="#65A9DAC5"
+        app:progressColor="#a9dac5" />
+
+    <com.bxute.producti.VerticalSlider
+        android:id="@+id/focus_slider"
+        android:layout_width="84dp"
+        android:layout_height="270dp"
+        android:layout_below="@+id/energy_level_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8sp"
+        android:background="#65A4CFEF"
+        app:progressColor="#a4cfef" />
+
+    <com.bxute.producti.VerticalSlider
+        android:id="@+id/motivation_slider"
+        android:layout_width="84dp"
+        android:layout_height="270dp"
+        android:layout_below="@+id/energy_level_text"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8sp"
+        android:layout_toRightOf="@+id/focus_slider"
+        android:background="#65e5a5d3"
+        app:progressColor="#e5a5d3" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/energy_level_label"
+        android:layout_marginLeft="36sp"
+        android:layout_marginTop="24sp"
+        android:layout_marginRight="36sp"
+        android:background="@drawable/thought_editor_bg"
+        android:hint="Your thought..."
+        android:minHeight="56dp"
+        android:paddingStart="24dp"
+        android:paddingLeft="24dp" />
+
+</RelativeLayout>

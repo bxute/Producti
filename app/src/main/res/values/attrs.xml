@@ -5,7 +5,6 @@
 
 <resources>
     <declare-styleable name="VerticalSlider">
-        <attr name="progressPeekHeight" format="dimension" />
         <attr name="progressColor" format="color" />
     </declare-styleable>
 </resources>

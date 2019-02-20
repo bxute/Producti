@@ -15,13 +15,12 @@ import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.support.v4.math.MathUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 public class VerticalSlider extends View {
-  private static final int DEFAULT_SEGMENTS = 5;
+  private static final int DEFAULT_SEGMENTS = 10;
   int dashedLineHeight;
   private int mProgressColor;
   private int singleProgressSegmentHeight;
@@ -37,7 +36,6 @@ public class VerticalSlider extends View {
   private SliderProgressListener sliderProgressListener;
   private boolean mRectInitialized;
   private int mLastDispatchedValue;
-  private int requestDrawCount = 0;
   private boolean onceDrawn = false;
 
   public VerticalSlider(Context context) {
@@ -52,7 +50,6 @@ public class VerticalSlider extends View {
     super(context, attrs, defStyleAttr);
     try {
       TypedArray ta = context.getResources().obtainAttributes(attrs, R.styleable.VerticalSlider);
-      // mPeekHeight = (int) ta.getDimension(R.styleable.VerticalSlider_progressPeekHeight, 24);
       mProgressColor = ta.getColor(R.styleable.VerticalSlider_progressColor, Color.parseColor("#4CAF50"));
       ta.recycle();
     }
@@ -108,7 +105,7 @@ public class VerticalSlider extends View {
   private void dispatchSliderValue(int mSliderTop) {
     int slided = mHeight - mSliderTop;
     int segmentNum = slided / singleProgressSegmentHeight;
-    int progress = MathUtils.clamp(segmentNum, 0, 5);
+    int progress = MathUtils.clamp(segmentNum, 0, DEFAULT_SEGMENTS);
     //skip redundant dispatch
     if (mLastDispatchedValue != progress) {
       mLastDispatchedValue = progress;
