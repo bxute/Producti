@@ -24,10 +24,9 @@ public class VerticalSlider extends View {
   private static final int DEFAULT_SEGMENTS = 5;
   int dashedLineHeight;
   private int mProgressColor;
-  private int mPeekHeight;
   private int singleProgressSegmentHeight;
-  private int mLastTop;
-  private int mSliderTop;
+  private int mLastTop = -1;
+  private int mSliderCurrentTop;
   private int mHeight;
   private int mWidth;
   private Paint sliderPaint;
@@ -38,6 +37,8 @@ public class VerticalSlider extends View {
   private SliderProgressListener sliderProgressListener;
   private boolean mRectInitialized;
   private int mLastDispatchedValue;
+  private int requestDrawCount = 0;
+  private boolean onceDrawn = false;
 
   public VerticalSlider(Context context) {
     this(context, null);
@@ -51,15 +52,13 @@ public class VerticalSlider extends View {
     super(context, attrs, defStyleAttr);
     try {
       TypedArray ta = context.getResources().obtainAttributes(attrs, R.styleable.VerticalSlider);
-      mPeekHeight = (int) ta.getDimension(R.styleable.VerticalSlider_progressPeekHeight, 24);
+      // mPeekHeight = (int) ta.getDimension(R.styleable.VerticalSlider_progressPeekHeight, 24);
       mProgressColor = ta.getColor(R.styleable.VerticalSlider_progressColor, Color.parseColor("#4CAF50"));
       ta.recycle();
     }
     catch (Exception e) {
       e.printStackTrace();
     }
-    //peekHeight
-    //color
     initialize();
   }
 
@@ -69,7 +68,6 @@ public class VerticalSlider extends View {
     sliderPaint.setColor(mProgressColor);
     sliderPaint.setStrokeWidth(4);
     sliderPaint.setAntiAlias(true);
-
     //for painting dashed-lines
     rangeLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     rangeLinePaint.setColor(mProgressColor);
@@ -87,24 +85,30 @@ public class VerticalSlider extends View {
         break;
       case MotionEvent.ACTION_MOVE:
         deltaY = (int) (touchDownY - event.getY());
-        mSliderTop = mLastTop - deltaY;
-        dispatchSliderValue(mSliderTop);
-        setNewTop(mSliderTop);
+        mSliderCurrentTop = mLastTop - deltaY;
+        mSliderCurrentTop = MathUtils.clamp(mSliderCurrentTop, 0, mHeight);
+        dispatchSliderValue(mSliderCurrentTop);
+        setNewTop(mSliderCurrentTop);
         invalidate();
         break;
       case MotionEvent.ACTION_CANCEL:
       case MotionEvent.ACTION_UP:
-        mLastTop = mSliderTop;
+        mLastTop = mSliderCurrentTop;
         settleSliderToNearestValue();
         break;
     }
     return true;
   }
 
+  /**
+   * calculate the progress and call the callback method.
+   *
+   * @param mSliderTop top of the slider
+   */
   private void dispatchSliderValue(int mSliderTop) {
     int slided = mHeight - mSliderTop;
     int segmentNum = slided / singleProgressSegmentHeight;
-    int progress = MathUtils.clamp(segmentNum, 1, 5);
+    int progress = MathUtils.clamp(segmentNum, 0, 5);
     //skip redundant dispatch
     if (mLastDispatchedValue != progress) {
       mLastDispatchedValue = progress;
@@ -115,7 +119,7 @@ public class VerticalSlider extends View {
   }
 
   private void setNewTop(int top) {
-    mRect.top = MathUtils.clamp(top, 0, mHeight - mPeekHeight);
+    mRect.top = MathUtils.clamp(top, 0, mHeight);
   }
 
   private void settleSliderToNearestValue() {
@@ -144,6 +148,7 @@ public class VerticalSlider extends View {
     });
     valueAnimator.start();
     mLastTop = targetSliderTop;
+    dispatchSliderValue(mLastTop);
   }
 
   private int getHeightForSegment(int segmentNum) {
@@ -157,29 +162,29 @@ public class VerticalSlider extends View {
       dashedLineHeight = getHeightForSegment(i);
       canvas.drawLine(0, dashedLineHeight, mWidth, dashedLineHeight, rangeLinePaint);
     }
+    onceDrawn = true;
   }
 
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     mWidth = MeasureSpec.getSize(widthMeasureSpec);
     mHeight = MeasureSpec.getSize(heightMeasureSpec);
-    mLastTop = mHeight;
-    mSliderTop = mLastTop;
     singleProgressSegmentHeight = mHeight / DEFAULT_SEGMENTS;
     if (!mRectInitialized) {
       initializeRect();
+      mRectInitialized = true;
     }
-    setNewTop(mSliderTop);
+    if (!onceDrawn) {
+      mLastTop = mHeight;
+      mSliderCurrentTop = mLastTop;
+      setNewTop(mLastTop);
+    }
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
   }
 
   private void initializeRect() {
     mRect = new Rect(0, 0, mWidth, mHeight);
     mRectInitialized = true;
-  }
-
-  private void log(String msg) {
-    Log.d("VerticalSlider", msg);
   }
 
   public void setSliderProgressListener(SliderProgressListener sliderProgressListener) {

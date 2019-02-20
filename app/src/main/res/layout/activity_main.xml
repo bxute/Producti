@@ -7,12 +7,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/value"
+        android:textColor="@color/colorPrimary"
+        android:textSize="36sp"
+        android:text="0"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/slider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <com.bxute.producti.VerticalSlider
+        android:id="@+id/slider"
         android:layout_centerInParent="true"
         android:layout_width="120dp"
         android:background="#2D4CAF50"
+        app:progressPeekHeight="48dp"
+        app:progressColor="#4CAF50"
         android:layout_height="360dp" />
 
 </RelativeLayout>
