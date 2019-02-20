@@ -6,7 +6,7 @@
 
 <resources>
     <color name="white">#ffffff</color>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1B76BE</color>
+    <color name="colorAccent">#BB1C53</color>
 </resources>
