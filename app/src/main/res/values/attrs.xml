@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Developer email: hiankit.work@gmail.com
+  ~ GitHub: https://github.com/bxute
+  -->
+
+<resources>
+    <declare-styleable name="VerticalSlider">
+        <attr name="progressPeekHeight" format="dimension" />
+        <attr name="progressColor" format="color" />
+    </declare-styleable>
+</resources>

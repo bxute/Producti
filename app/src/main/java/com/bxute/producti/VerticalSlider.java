@@ -7,10 +7,10 @@ package com.bxute.producti;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.support.v4.math.MathUtils;
@@ -22,8 +22,9 @@ import android.view.animation.DecelerateInterpolator;
 
 public class VerticalSlider extends View {
   private static final int DEFAULT_SEGMENTS = 5;
-  //todo: draw ranges with dashed-lines
   int dashedLineHeight;
+  private int mProgressColor;
+  private int mPeekHeight;
   private int singleProgressSegmentHeight;
   private int mLastTop;
   private int mSliderTop;
@@ -31,15 +32,12 @@ public class VerticalSlider extends View {
   private int mWidth;
   private Paint sliderPaint;
   private Paint rangeLinePaint;
-  private Path mPath;
   private Rect mRect;
-  private Context mContext;
   private float touchDownY;
   private int deltaY;
   private SliderProgressListener sliderProgressListener;
   private boolean mRectInitialized;
   private int mLastDispatchedValue;
-  private int PEEK_HEIGHT = 24;
 
   public VerticalSlider(Context context) {
     this(context, null);
@@ -51,21 +49,30 @@ public class VerticalSlider extends View {
 
   public VerticalSlider(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    initialize(context);
+    try {
+      TypedArray ta = context.getResources().obtainAttributes(attrs, R.styleable.VerticalSlider);
+      mPeekHeight = (int) ta.getDimension(R.styleable.VerticalSlider_progressPeekHeight, 24);
+      mProgressColor = ta.getColor(R.styleable.VerticalSlider_progressColor, Color.parseColor("#4CAF50"));
+      ta.recycle();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    //peekHeight
+    //color
+    initialize();
   }
 
-  private void initialize(Context context) {
-    this.mContext = context;
-    mPath = new Path();
+  private void initialize() {
     //for painting rectangle
     sliderPaint = new Paint();
-    sliderPaint.setColor(Color.parseColor("#4CAF50"));
+    sliderPaint.setColor(mProgressColor);
     sliderPaint.setStrokeWidth(4);
     sliderPaint.setAntiAlias(true);
 
     //for painting dashed-lines
     rangeLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    rangeLinePaint.setColor(Color.parseColor("#4CAF50"));
+    rangeLinePaint.setColor(mProgressColor);
     rangeLinePaint.setStrokeWidth(2);
     rangeLinePaint.setStyle(Paint.Style.STROKE);
   }
@@ -108,10 +115,9 @@ public class VerticalSlider extends View {
   }
 
   private void setNewTop(int top) {
-    mRect.top = MathUtils.clamp(top, 0, mHeight - PEEK_HEIGHT);
+    mRect.top = MathUtils.clamp(top, 0, mHeight - mPeekHeight);
   }
 
-  //todo: soft animate the top
   private void settleSliderToNearestValue() {
     int tempSegHeight;
     int closestSegment = 0;
