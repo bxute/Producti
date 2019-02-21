@@ -3,7 +3,12 @@
  * GitHub: https://github.com/bxute
  */
 
-package com.bxute.producti;
+/*
+ * Developer email: hiankit.work@gmail.com
+ * GitHub: https://github.com/bxute
+ */
+
+package com.bxute.producti.ui;
 
 
 import android.os.Bundle;
@@ -14,6 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.bxute.producti.R;
+import com.bxute.producti.view.VerticalSlider;
 
 
 /**

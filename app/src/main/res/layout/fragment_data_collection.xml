@@ -103,7 +103,7 @@
         android:textColor="#AE000000"
         android:textSize="20dp" />
 
-    <com.bxute.producti.VerticalSlider
+    <com.bxute.producti.view.VerticalSlider
         android:id="@+id/energy_slider"
         android:layout_width="84dp"
         android:layout_height="270dp"
@@ -114,7 +114,7 @@
         android:background="#65A9DAC5"
         app:progressColor="#a9dac5" />
 
-    <com.bxute.producti.VerticalSlider
+    <com.bxute.producti.view.VerticalSlider
         android:id="@+id/focus_slider"
         android:layout_width="84dp"
         android:layout_height="270dp"
@@ -124,7 +124,7 @@
         android:background="#65A4CFEF"
         app:progressColor="#a4cfef" />
 
-    <com.bxute.producti.VerticalSlider
+    <com.bxute.producti.view.VerticalSlider
         android:id="@+id/motivation_slider"
         android:layout_width="84dp"
         android:layout_height="270dp"

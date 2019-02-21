@@ -3,7 +3,12 @@
  * GitHub: https://github.com/bxute
  */
 
-package com.bxute.producti;
+/*
+ * Developer email: hiankit.work@gmail.com
+ * GitHub: https://github.com/bxute
+ */
+
+package com.bxute.producti.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -18,6 +23,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+
+import com.bxute.producti.R;
 
 public class VerticalSlider extends View {
   private static final int DEFAULT_SEGMENTS = 10;

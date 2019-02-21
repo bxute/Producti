@@ -3,7 +3,12 @@
  * GitHub: https://github.com/bxute
  */
 
-package com.bxute.producti;
+/*
+ * Developer email: hiankit.work@gmail.com
+ * GitHub: https://github.com/bxute
+ */
+
+package com.bxute.producti.ui;
 
 import android.app.Activity;
 import android.content.Intent;

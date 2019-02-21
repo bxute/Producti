@@ -5,9 +5,11 @@
 
 package com.bxute.producti;
 
+import com.bxute.producti.database.LocalDbContract;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -16,7 +18,13 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
   @Test
-  public void addition_isCorrect() {
-    assertEquals(4, 2 + 2);
+  public void test_createIdFrom() {
+    int year = 2019;
+    int month = 2;
+    int date = 3;
+    int hour = 4;
+    int id = LocalDbContract.createIDFrom(hour, date, month, year);
+    System.out.print(id);
+    assertEquals(2019020304, id);
   }
 }
