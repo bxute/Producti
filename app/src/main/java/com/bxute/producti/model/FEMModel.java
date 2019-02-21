@@ -84,4 +84,17 @@ public class FEMModel {
   public void setModifiedAt(String modified_at) {
     this.modifiedAt = modified_at;
   }
+
+  @Override
+  public String toString() {
+    return "FEMModel{" +
+     "focus=" + focus +
+     ", energy=" + energy +
+     ", motivation=" + motivation +
+     ", remarks='" + remarks + '\'' +
+     ", dataID=" + dataID +
+     ", createdAt='" + createdAt + '\'' +
+     ", modifiedAt='" + modifiedAt + '\'' +
+     '}';
+  }
 }

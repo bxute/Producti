@@ -103,8 +103,8 @@ public class LocalDatabase extends SQLiteOpenHelper {
       String remarks;
       String ca;
       String ma;
-      FEMModel femModel = new FEMModel();
       while (hasMore) {
+        FEMModel femModel = new FEMModel();
         dataId = cursor.getInt(cursor.getColumnIndex(LocalDbContract.COL_DATA_ID));
         focus = cursor.getInt(cursor.getColumnIndex(LocalDbContract.COL_FOCUS));
         energy = cursor.getInt(cursor.getColumnIndex(LocalDbContract.COL_ENERGY));
@@ -126,7 +126,11 @@ public class LocalDatabase extends SQLiteOpenHelper {
     return femModels;
   }
 
-  @Override
+  public void allRows() {
+    SQLiteDatabase database = getWritableDatabase();
+    database.execSQL("DROP TABLE IF EXISTS " + LocalDbContract.TABLE_FEM);
+    onCreate(database);
+  }  @Override
   public void onCreate(SQLiteDatabase db) {
     db.execSQL(CREATE_TABLE_SQL);
   }
@@ -136,4 +140,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
     db.execSQL("DROP TABLE IF EXISTS " + LocalDbContract.TABLE_FEM);
     onCreate(db);
   }
+
+
 }
