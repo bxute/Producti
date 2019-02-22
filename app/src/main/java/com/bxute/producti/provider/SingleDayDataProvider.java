@@ -40,7 +40,10 @@ public class SingleDayDataProvider implements IChartDataProvider {
 
   @Override
   public LineData getLineData() {
-    ArrayList<FEMModel> dataList = dataStore.getSingleDayData(CalendarDayModel.from(LocalDate.of(2019, 1, 1)));
+    ArrayList<FEMModel> dataList = dataStore.getDataInRange(
+     CalendarDayModel.from(LocalDate.of(2019, 1, 1)),
+     CalendarDayModel.from(LocalDate.of(2019, 1, 3))
+    );
     final String[] xAxisValues = new String[dataList.size()];
     List<Entry> focus = new ArrayList<>();
     List<Entry> energy = new ArrayList<>();
@@ -49,10 +52,20 @@ public class SingleDayDataProvider implements IChartDataProvider {
     //x - time of the day
     //y - respective level (focus , energy etc.)
     for (int i = 0; i < dataList.size(); i++) {
-      focus.add(new Entry(HourFormatter.getHour(dataList.get(i).getDataID()), dataList.get(i).getFocus()));
-      motivationsLevelList.add(new Entry(HourFormatter.getHour(dataList.get(i).getDataID()), dataList.get(i).getMotivation()));
-      energy.add(new Entry(HourFormatter.getHour(dataList.get(i).getDataID()), dataList.get(i).getEnergy()));
-      xAxisValues[i] = HourFormatter.getFormattedHour(dataList.get(i).getDataID(), hourMode);
+      boolean shouldHaveAxisValue = false;
+      if (dataList.get(i).getFocus() > 0) {
+        focus.add(new Entry(HourFormatter.getHour(dataList.get(i).getDataID()), dataList.get(i).getFocus()));
+        shouldHaveAxisValue = true;
+      }
+      if (dataList.get(i).getMotivation() > 0) {
+        motivationsLevelList.add(new Entry(HourFormatter.getHour(dataList.get(i).getDataID()), dataList.get(i).getMotivation()));
+        shouldHaveAxisValue = true;
+      }
+      if (dataList.get(i).getEnergy() > 0) {
+        energy.add(new Entry(HourFormatter.getHour(dataList.get(i).getDataID()), dataList.get(i).getEnergy()));
+        shouldHaveAxisValue = true;
+      }
+      xAxisValues[i] = shouldHaveAxisValue ? HourFormatter.getFormattedHour(dataList.get(i).getDataID(), hourMode) : "";
     }
 
     //set x-axis values

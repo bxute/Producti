@@ -35,25 +35,23 @@ public class DataStore {
    * @return Average calculated data list.
    */
   public ArrayList<FEMModel> getDataInRange(CalendarDayModel fromDay, CalendarDayModel toDay) {
-    ArrayList<FEMModel> avgDataList = new ArrayList<>();
+    ArrayList<FEMModel> avgDataList;
     //get data for each day and fillIn rows
-    CalendarDayModel currentDay = fromDay;
-    int fromDataID = LocalDbContract.createIDFrom(0, currentDay.getDay(), currentDay.getMonth(), currentDay.getYear());
-    int toDataID = LocalDbContract.createIDFrom(0, currentDay.getDay(), currentDay.getMonth(), currentDay.getYear());
+    int fromDataID = LocalDbContract.createIDFrom(0, fromDay.getDay(), fromDay.getMonth(), fromDay.getYear());
+    int toDataID = LocalDbContract.createIDFrom(0, toDay.getDay(), toDay.getMonth(), toDay.getYear());
     ArrayList<FEMModel> dataListInGivenRange = localDatabase.getAllRowsWithinRange(fromDataID, toDataID);
     avgDataList = calculateAverageFor(dataListInGivenRange);
     return avgDataList;
   }
 
-  private ArrayList<FEMModel> calculateAverageFor(ArrayList<FEMModel> dataListInGivenRange) {
+  public ArrayList<FEMModel> calculateAverageFor(ArrayList<FEMModel> dataListInGivenRange) {
     //we assume dataList has items(real or default) at each hour.
     ArrayList<FEMModel> avgDataList = new ArrayList<>();
-    FEMModel[] sum = new FEMModel[24];
     int focus[] = new int[24];
     int energy[] = new int[24];
     int motivation[] = new int[24];
     int[] count = new int[24];
-    int arrIndex = 0;
+    int arrIndex;
     FEMModel temp;
     for (int i = 0; i < dataListInGivenRange.size(); i++) {
       arrIndex = i % 24;
@@ -71,18 +69,23 @@ public class DataStore {
     int energyAvg;
     int motivationAvg;
     for (int i = 0; i < 24; i++) {
-      focusAvg = focus[i] / count[i];
-      energyAvg = energy[i] / count[i];
-      motivationAvg = motivation[i] / count[i];
-      FEMModel femModel = new FEMModel();
-      femModel.setRemarks("");
-      femModel.setFocus(focusAvg);
-      femModel.setEnergy(energyAvg);
-      femModel.setMotivation(motivationAvg);
-      femModel.setCreatedAt("");
-      femModel.setModifiedAt("");
-      femModel.setDataID(LocalDbContract.createIDFrom(i, 1, 1, 1999)); //only hour is relevant for rendering data.
-      avgDataList.add(femModel);
+      if (count[i] > 0) {
+        focusAvg = focus[i] / count[i];
+        energyAvg = energy[i] / count[i];
+        motivationAvg = motivation[i] / count[i];
+        FEMModel femModel = new FEMModel();
+        femModel.setRemarks("");
+        femModel.setFocus(focusAvg);
+        femModel.setEnergy(energyAvg);
+        femModel.setMotivation(motivationAvg);
+        femModel.setCreatedAt("");
+        femModel.setModifiedAt("");
+        //only hour is relevant for rendering data.
+        femModel.setDataID(LocalDbContract.createIDFrom(i, 1, 1, 1999));
+        avgDataList.add(femModel);
+      } else {
+        avgDataList.add(getDefaultVoidModel());
+      }
     }
     return avgDataList;
   }

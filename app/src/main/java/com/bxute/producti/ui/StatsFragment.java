@@ -50,9 +50,9 @@ public class StatsFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     lineChart = view.findViewById(R.id.chart);
-//    dummyData = new DummyData(view.getContext());
-//    dummyData.deleteDummyData();
-//    dummyData.insertDummyData();
+    dummyData = new DummyData(view.getContext());
+    dummyData.deleteDummyData();
+    dummyData.insertDummyData();
     singleDayDataProvider = new SingleDayDataProvider(view.getContext(), lineChart);
     lineChart.setData(singleDayDataProvider.getLineData());
   }
