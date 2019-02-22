@@ -46,11 +46,43 @@ public class DataStore {
   }
 
   private ArrayList<FEMModel> calculateAverageFor(ArrayList<FEMModel> dataListInGivenRange) {
-    //we assume dateList has items(real or default) at each hour.
-    int days = dataListInGivenRange.size() / 24;
+    //we assume dataList has items(real or default) at each hour.
     ArrayList<FEMModel> avgDataList = new ArrayList<>();
-    for (int i = 0; i < days; i++) {
-
+    FEMModel[] sum = new FEMModel[24];
+    int focus[] = new int[24];
+    int energy[] = new int[24];
+    int motivation[] = new int[24];
+    int[] count = new int[24];
+    int arrIndex = 0;
+    FEMModel temp;
+    for (int i = 0; i < dataListInGivenRange.size(); i++) {
+      arrIndex = i % 24;
+      temp = dataListInGivenRange.get(i);
+      if (temp.getEnergy() > -1 && temp.getFocus() > -1 && temp.getMotivation() > -1) {
+        //take the sum and increase the count
+        focus[arrIndex] += temp.getFocus();
+        energy[arrIndex] += temp.getEnergy();
+        motivation[arrIndex] += temp.getMotivation();
+        count[arrIndex] += 1;
+      }
+    }
+    // calculate average
+    int focusAvg;
+    int energyAvg;
+    int motivationAvg;
+    for (int i = 0; i < 24; i++) {
+      focusAvg = focus[i] / count[i];
+      energyAvg = energy[i] / count[i];
+      motivationAvg = motivation[i] / count[i];
+      FEMModel femModel = new FEMModel();
+      femModel.setRemarks("");
+      femModel.setFocus(focusAvg);
+      femModel.setEnergy(energyAvg);
+      femModel.setMotivation(motivationAvg);
+      femModel.setCreatedAt("");
+      femModel.setModifiedAt("");
+      femModel.setDataID(LocalDbContract.createIDFrom(i, 1, 1, 1999)); //only hour is relevant for rendering data.
+      avgDataList.add(femModel);
     }
     return avgDataList;
   }
