@@ -38,7 +38,7 @@ public class DataStore {
     ArrayList<FEMModel> avgDataList;
     //get data for each day and fillIn rows
     int fromDataID = LocalDbContract.createIDFrom(0, fromDay.getDay(), fromDay.getMonth(), fromDay.getYear());
-    int toDataID = LocalDbContract.createIDFrom(0, toDay.getDay(), toDay.getMonth(), toDay.getYear());
+    int toDataID = LocalDbContract.createIDFrom(23, toDay.getDay(), toDay.getMonth(), toDay.getYear());
     ArrayList<FEMModel> dataListInGivenRange = localDatabase.getAllRowsWithinRange(fromDataID, toDataID);
     avgDataList = calculateAverageFor(dataListInGivenRange);
     return avgDataList;

@@ -6,15 +6,16 @@
 package com.bxute.producti.database;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.bxute.producti.model.FEMModel;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class DummyData {
   Random random;
   LocalDatabase localDatabase;
+  private DummyDataCallback dummyDataCallback;
 
   public DummyData(Context context) {
     localDatabase = new LocalDatabase(context);
@@ -22,23 +23,27 @@ public class DummyData {
   }
 
   public void insertDummyData() {
-    ArrayList<FEMModel> femModels = new ArrayList<>();
-    int days = 2;
-    int totalHours = 24 * days;
+    int days = 7;
     FEMModel model = new FEMModel();
-    for (int i = 0; i < totalHours; i++) {
-      int h = i % 24;
-      int d = (i / 24) + 1;
-      int m = (d / 30) + 1;
-      int y = 2019;
-      model.setRemarks("Thought of id " + i);
-      model.setEnergy(i == 2 ? -1 : getRandomInt());
-      model.setFocus(getRandomInt());
-      model.setMotivation(getRandomInt());
-      model.setDataID(LocalDbContract.createIDFrom(h, d, m, y));
-      model.setCreatedAt("--ca--");
-      model.setModifiedAt("--ma--");
-      localDatabase.insertRow(model);
+    for (int j = 1; j < days; j++) {
+      //0 to 23 Hrs.
+      for (int i = 0; i < 24; i++) {
+        int h = i;
+        int d = j;
+        int m = (j / 30) + 1;
+        int y = 2019;
+        model.setRemarks("Thought of id " + i);
+        model.setEnergy(i == 2 ? -1 : getRandomInt());
+        model.setFocus(getRandomInt());
+        model.setMotivation(getRandomInt());
+        model.setDataID(LocalDbContract.createIDFrom(h, d, m, y));
+        model.setCreatedAt("--ca--");
+        model.setModifiedAt("--ma--");
+        localDatabase.insertRow(model);
+      }
+    }
+    if (dummyDataCallback != null) {
+      dummyDataCallback.onDataInsertionFinished();
     }
   }
 
@@ -48,5 +53,13 @@ public class DummyData {
 
   public void deleteDummyData() {
     localDatabase.allRows();
+  }
+
+  public void setDummyDataCallback(DummyDataCallback dummyDataCallback) {
+    this.dummyDataCallback = dummyDataCallback;
+  }
+
+  public interface DummyDataCallback {
+    void onDataInsertionFinished();
   }
 }

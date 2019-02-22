@@ -40,10 +40,7 @@ public class SingleDayDataProvider implements IChartDataProvider {
 
   @Override
   public LineData getLineData() {
-    ArrayList<FEMModel> dataList = dataStore.getDataInRange(
-     CalendarDayModel.from(LocalDate.of(2019, 1, 1)),
-     CalendarDayModel.from(LocalDate.of(2019, 1, 3))
-    );
+    ArrayList<FEMModel> dataList = dataStore.getSingleDayData(CalendarDayModel.from(LocalDate.of(2019, 1, 1)));
     final String[] xAxisValues = new String[dataList.size()];
     List<Entry> focus = new ArrayList<>();
     List<Entry> energy = new ArrayList<>();
@@ -72,7 +69,14 @@ public class SingleDayDataProvider implements IChartDataProvider {
     IAxisValueFormatter formatter = new IAxisValueFormatter() {
       @Override
       public String getFormattedValue(float value, AxisBase axis) {
-        return xAxisValues[(int) value];
+        String label = "";
+        try {
+          label = xAxisValues[(int) value];
+        }
+        catch (Exception e) {
+          e.printStackTrace();
+        }
+        return label;
       }
     };
     XAxis xAxis = mLineChart.getXAxis();
