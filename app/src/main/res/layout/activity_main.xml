@@ -24,6 +24,7 @@
         android:weightSum="4">
 
         <ImageView
+            android:id="@+id/meter_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -33,6 +34,7 @@
             android:src="@drawable/meter" />
 
         <ImageView
+            android:id="@+id/stats_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -42,6 +44,7 @@
             android:src="@drawable/pulse" />
 
         <ImageView
+            android:id="@+id/calendar_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -51,6 +54,7 @@
             android:src="@drawable/calendar" />
 
         <ImageView
+            android:id="@+id/settings_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
