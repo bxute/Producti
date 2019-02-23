@@ -13,7 +13,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.StatsFragment">
+        tools:context=".ui.fragment.StatsFragment">
 
         <TextView
             android:id="@+id/today_label"

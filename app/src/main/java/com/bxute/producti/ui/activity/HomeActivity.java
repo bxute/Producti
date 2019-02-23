@@ -8,7 +8,12 @@
  * GitHub: https://github.com/bxute
  */
 
-package com.bxute.producti.ui;
+/*
+ * Developer email: hiankit.work@gmail.com
+ * GitHub: https://github.com/bxute
+ */
+
+package com.bxute.producti.ui.activity;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -19,8 +24,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bxute.producti.R;
+import com.bxute.producti.ui.fragment.CalendarFragment;
+import com.bxute.producti.ui.fragment.DataCollectionFragment;
+import com.bxute.producti.ui.fragment.SettingsFragment;
+import com.bxute.producti.ui.fragment.StatsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
   private final int METER_TAB = 0;
   private final int STATS_TAB = 1;
   private final int CALENDAR_TAB = 2;

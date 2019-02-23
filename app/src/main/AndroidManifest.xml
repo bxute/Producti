@@ -3,24 +3,25 @@
     package="com.bxute.producti">
 
     <application
-        android:name=".ui.Main"
+        android:name=".application.Main"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.LoginActivity"></activity>
         <activity
-            android:name=".ui.Splash"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:name=".ui.activity.Splash"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.activity.HomeActivity" />
     </application>
 
 </manifest>
