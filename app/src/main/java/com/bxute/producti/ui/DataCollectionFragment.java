@@ -32,7 +32,6 @@ public class DataCollectionFragment extends Fragment {
   VerticalSlider energySlider;
   VerticalSlider focusSlider;
   VerticalSlider motivationSlider;
-
   TextView energyLevel;
   TextView focusLevel;
   TextView motivationLevel;
@@ -47,12 +46,7 @@ public class DataCollectionFragment extends Fragment {
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_data_collection, container, false);
-    energySlider = view.findViewById(R.id.energy_slider);
-    focusSlider = view.findViewById(R.id.focus_slider);
-    motivationSlider = view.findViewById(R.id.motivation_slider);
-    energyLevel = view.findViewById(R.id.energy_level_text);
-    focusLevel = view.findViewById(R.id.focus_level_text);
-    motivationLevel = view.findViewById(R.id.motivation_level_text);
+    initializeViewObjects(view);
     return view;
   }
 
@@ -63,23 +57,40 @@ public class DataCollectionFragment extends Fragment {
   }
 
   private void attachListeners() {
-    energySlider.setSliderProgressListener(new VerticalSlider.SliderProgressListener() {
-      @Override
-      public void onSliderValueChanged(int value) {
-        energyLevel.setText(String.valueOf(value));
-      }
-    });
-    focusSlider.setSliderProgressListener(new VerticalSlider.SliderProgressListener() {
-      @Override
-      public void onSliderValueChanged(int value) {
-        focusLevel.setText(String.valueOf(value));
-      }
-    });
-    motivationSlider.setSliderProgressListener(new VerticalSlider.SliderProgressListener() {
-      @Override
-      public void onSliderValueChanged(int value) {
-        motivationLevel.setText(String.valueOf(value));
-      }
-    });
+    if (energySlider != null)
+      energySlider.setSliderProgressListener(new VerticalSlider.SliderProgressListener() {
+        @Override
+        public void onSliderValueChanged(int value) {
+          if (energyLevel != null)
+            energyLevel.setText(String.valueOf(value));
+        }
+      });
+
+    if (focusSlider != null)
+      focusSlider.setSliderProgressListener(new VerticalSlider.SliderProgressListener() {
+        @Override
+        public void onSliderValueChanged(int value) {
+          if (focusLevel != null)
+            focusLevel.setText(String.valueOf(value));
+        }
+      });
+
+    if (motivationSlider != null)
+      motivationSlider.setSliderProgressListener(new VerticalSlider.SliderProgressListener() {
+        @Override
+        public void onSliderValueChanged(int value) {
+          if (motivationLevel != null)
+            motivationLevel.setText(String.valueOf(value));
+        }
+      });
+  }
+
+  private void initializeViewObjects(View view) {
+    energySlider = view.findViewById(R.id.energy_slider);
+    focusSlider = view.findViewById(R.id.focus_slider);
+    motivationSlider = view.findViewById(R.id.motivation_slider);
+    energyLevel = view.findViewById(R.id.energy_level_text);
+    focusLevel = view.findViewById(R.id.focus_level_text);
+    motivationLevel = view.findViewById(R.id.motivation_level_text);
   }
 }

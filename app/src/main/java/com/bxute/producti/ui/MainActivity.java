@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
   StatsFragment statsFragment;
   CalendarFragment calendarFragment;
   SettingsFragment settingsFragment;
-
   ImageView statsIcon;
   ImageView meterIcon;
   ImageView calendarIcon;
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     initializeTabIcons();
+    attachClickListenersOnTabs();
+    //by default
     selectTab(METER_TAB);
   }
 
@@ -50,70 +51,52 @@ public class MainActivity extends AppCompatActivity {
     meterIcon = findViewById(R.id.meter_icon);
     calendarIcon = findViewById(R.id.calendar_icon);
     settingsIcon = findViewById(R.id.settings_icon);
-    statsIcon.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        selectTab(STATS_TAB);
-      }
-    });
-    meterIcon.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        selectTab(METER_TAB);
-      }
-    });
-    calendarIcon.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        selectTab(CALENDAR_TAB);
-      }
-    });
-    settingsIcon.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        selectTab(SETTING_TAB);
-      }
-    });
   }
 
   private void selectTab(int tab) {
-    if (mCurrentTab == tab)
-      return;
-    meterIcon.clearColorFilter();
-    statsIcon.clearColorFilter();
-    calendarIcon.clearColorFilter();
-    settingsIcon.clearColorFilter();
-    switch (tab) {
-      case METER_TAB:
-        meterIcon.setColorFilter(Color.parseColor("#2196F3"), PorterDuff.Mode.SRC_ATOP);
-        if (dataCollectionFragment == null) {
-          dataCollectionFragment = new DataCollectionFragment();
-        }
-        transactFragment(dataCollectionFragment);
-        break;
-      case STATS_TAB:
-        statsIcon.setColorFilter(Color.parseColor("#2196F3"), PorterDuff.Mode.SRC_ATOP);
-        if (statsFragment == null) {
-          statsFragment = new StatsFragment();
-        }
-        transactFragment(statsFragment);
-        break;
-      case CALENDAR_TAB:
-        calendarIcon.setColorFilter(Color.parseColor("#2196F3"), PorterDuff.Mode.SRC_ATOP);
-        if (calendarFragment == null) {
-          calendarFragment = new CalendarFragment();
-        }
-        transactFragment(calendarFragment);
-        break;
-      case SETTING_TAB:
-        settingsIcon.setColorFilter(Color.parseColor("#2196F3"), PorterDuff.Mode.SRC_ATOP);
-        if (settingsFragment == null) {
-          settingsFragment = new SettingsFragment();
-        }
-        transactFragment(settingsFragment);
-        break;
+    //handle all the NPE at once! :)
+    try {
+      if (mCurrentTab == tab)
+        return;
+      meterIcon.clearColorFilter();
+      statsIcon.clearColorFilter();
+      calendarIcon.clearColorFilter();
+      settingsIcon.clearColorFilter();
+      switch (tab) {
+        case METER_TAB:
+          meterIcon.setColorFilter(Color.parseColor("#2196F3"), PorterDuff.Mode.SRC_ATOP);
+          if (dataCollectionFragment == null) {
+            dataCollectionFragment = new DataCollectionFragment();
+          }
+          transactFragment(dataCollectionFragment);
+          break;
+        case STATS_TAB:
+          statsIcon.setColorFilter(Color.parseColor("#2196F3"), PorterDuff.Mode.SRC_ATOP);
+          if (statsFragment == null) {
+            statsFragment = new StatsFragment();
+          }
+          transactFragment(statsFragment);
+          break;
+        case CALENDAR_TAB:
+          calendarIcon.setColorFilter(Color.parseColor("#2196F3"), PorterDuff.Mode.SRC_ATOP);
+          if (calendarFragment == null) {
+            calendarFragment = new CalendarFragment();
+          }
+          transactFragment(calendarFragment);
+          break;
+        case SETTING_TAB:
+          settingsIcon.setColorFilter(Color.parseColor("#2196F3"), PorterDuff.Mode.SRC_ATOP);
+          if (settingsFragment == null) {
+            settingsFragment = new SettingsFragment();
+          }
+          transactFragment(settingsFragment);
+          break;
+      }
+      mCurrentTab = tab;
     }
-    mCurrentTab = tab;
+    catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void transactFragment(Fragment fragment) {
@@ -121,5 +104,39 @@ public class MainActivity extends AppCompatActivity {
      .beginTransaction()
      .replace(R.id.frame_container, fragment)
      .commit();
+  }
+
+  private void attachClickListenersOnTabs() {
+    if (statsIcon != null)
+      statsIcon.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          selectTab(STATS_TAB);
+        }
+      });
+
+    if (meterIcon != null)
+      meterIcon.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          selectTab(METER_TAB);
+        }
+      });
+
+    if (calendarIcon != null)
+      calendarIcon.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          selectTab(CALENDAR_TAB);
+        }
+      });
+
+    if (settingsIcon != null)
+      settingsIcon.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          selectTab(SETTING_TAB);
+        }
+      });
   }
 }

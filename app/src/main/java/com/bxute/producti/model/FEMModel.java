@@ -10,6 +10,8 @@
 
 package com.bxute.producti.model;
 
+import com.bxute.producti.utils.ID;
+
 public class FEMModel {
   private int focus;
   private int energy;
@@ -20,6 +22,7 @@ public class FEMModel {
   private String modifiedAt;
 
   public FEMModel() {
+    init();
   }
 
   public FEMModel(int focus, int energy, int motivation, String remarks) {
@@ -83,6 +86,17 @@ public class FEMModel {
 
   public void setModifiedAt(String modified_at) {
     this.modifiedAt = modified_at;
+  }
+
+
+  public void init() {
+    setModifiedAt("");
+    setCreatedAt("");
+    setDataID(ID.createIDWith(0,1,1,2019));
+    setMotivation(-1);
+    setEnergy(-1);
+    setFocus(-1);
+    setRemarks("");
   }
 
   @Override

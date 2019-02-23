@@ -24,8 +24,4 @@ public class LocalDbContract {
    COL_MODIFIED_AT,
    COL_REMARKS
   };
-
-  public static int createIDFrom(int hour, int day, int month, int year) {
-    return (((year * 100 + month) * 100 + day) * 100 + hour);
-  }
 }

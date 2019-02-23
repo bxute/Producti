@@ -6,9 +6,9 @@
 package com.bxute.producti.database;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.bxute.producti.model.FEMModel;
+import com.bxute.producti.utils.ID;
 
 import java.util.Random;
 
@@ -36,7 +36,7 @@ public class DummyData {
         model.setEnergy(i == 2 ? -1 : getRandomInt());
         model.setFocus(getRandomInt());
         model.setMotivation(getRandomInt());
-        model.setDataID(LocalDbContract.createIDFrom(h, d, m, y));
+        model.setDataID(ID.createIDWith(h, d, m, y));
         model.setCreatedAt("--ca--");
         model.setModifiedAt("--ma--");
         localDatabase.insertRow(model);

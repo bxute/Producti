@@ -8,8 +8,8 @@ package com.bxute.producti.datastore;
 import android.content.Context;
 
 import com.bxute.producti.database.LocalDatabase;
-import com.bxute.producti.database.LocalDbContract;
 import com.bxute.producti.model.FEMModel;
+import com.bxute.producti.utils.ID;
 import com.cleancalendar.CalendarDayModel;
 
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ public class DataStore {
   public ArrayList<FEMModel> getDataInRange(CalendarDayModel fromDay, CalendarDayModel toDay) {
     ArrayList<FEMModel> avgDataList;
     //get data for each day and fillIn rows
-    int fromDataID = LocalDbContract.createIDFrom(0, fromDay.getDay(), fromDay.getMonth(), fromDay.getYear());
-    int toDataID = LocalDbContract.createIDFrom(23, toDay.getDay(), toDay.getMonth(), toDay.getYear());
+    int fromDataID = ID.createIDWith(0, fromDay.getDay(), fromDay.getMonth(), fromDay.getYear());
+    int toDataID = ID.createIDWith(23, toDay.getDay(), toDay.getMonth(), toDay.getYear());
     ArrayList<FEMModel> dataListInGivenRange = localDatabase.getAllRowsWithinRange(fromDataID, toDataID);
     avgDataList = calculateAverageFor(dataListInGivenRange);
     return avgDataList;
@@ -81,24 +81,12 @@ public class DataStore {
         femModel.setCreatedAt("");
         femModel.setModifiedAt("");
         //only hour is relevant for rendering data.
-        femModel.setDataID(LocalDbContract.createIDFrom(i, 1, 1, 1999));
+        femModel.setDataID(ID.createIDWith(i, 1, 1, 1999));
         avgDataList.add(femModel);
       } else {
-        avgDataList.add(getDefaultVoidModel());
+        avgDataList.add(new FEMModel());
       }
     }
     return avgDataList;
-  }
-
-  private FEMModel getDefaultVoidModel() {
-    FEMModel femModel = new FEMModel();
-    femModel.setModifiedAt("");
-    femModel.setCreatedAt("");
-    femModel.setDataID((int) System.currentTimeMillis());
-    femModel.setMotivation(-1);
-    femModel.setEnergy(-1);
-    femModel.setFocus(-1);
-    femModel.setRemarks("");
-    return femModel;
   }
 }

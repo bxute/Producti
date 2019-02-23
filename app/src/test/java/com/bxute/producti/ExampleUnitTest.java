@@ -5,13 +5,9 @@
 
 package com.bxute.producti;
 
-import com.bxute.producti.database.LocalDbContract;
-import com.bxute.producti.datastore.DataStore;
-import com.bxute.producti.model.FEMModel;
+import com.bxute.producti.utils.ID;
 
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,7 +23,7 @@ public class ExampleUnitTest {
     int month = 2;
     int date = 3;
     int hour = 4;
-    int id = LocalDbContract.createIDFrom(hour, date, month, year);
+    int id = ID.createIDWith(hour, date, month, year);
     System.out.print(id);
     assertEquals(2019020304, id);
   }
