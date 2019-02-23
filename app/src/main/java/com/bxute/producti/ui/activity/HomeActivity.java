@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bxute.producti.R;
+import com.bxute.producti.sheets.SheetManager;
 import com.bxute.producti.ui.fragment.CalendarFragment;
 import com.bxute.producti.ui.fragment.DataCollectionFragment;
 import com.bxute.producti.ui.fragment.SettingsFragment;
@@ -53,6 +54,16 @@ public class HomeActivity extends AppCompatActivity {
     attachClickListenersOnTabs();
     //by default
     selectTab(METER_TAB);
+    testSheets();
+  }
+
+  private void testSheets() {
+    new Thread() {
+      @Override
+      public void run() {
+        new SheetManager().fetchSpreadSheets();
+      }
+    }.start();
   }
 
   private void initializeTabIcons() {

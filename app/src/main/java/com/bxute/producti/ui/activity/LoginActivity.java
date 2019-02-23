@@ -12,12 +12,15 @@ import android.util.Log;
 import android.view.View;
 
 import com.bxute.producti.R;
+import com.bxute.producti.preference.PreferenceHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 
 public class LoginActivity extends AppCompatActivity {
@@ -42,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
   private void configureGSO() {
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+     .requestScopes(new Scope(Scopes.DRIVE_APPS))
      .requestEmail()
      .build();
     mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -67,10 +71,11 @@ public class LoginActivity extends AppCompatActivity {
       GoogleSignInAccount account = completedTask.getResult(ApiException.class);
       Log.d("LoginPage", "Successfully signed In");
       Log.d("LoginPage", account.getEmail());
+      PreferenceHelper.getInstance().setAuthToken(account.getServerAuthCode());
       openHomePage();
     }
     catch (ApiException e) {
-       e.printStackTrace();
+      e.printStackTrace();
     }
   }
 
