@@ -10,12 +10,13 @@
 
 package com.bxute.producti.application;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 
-public class Main extends Application {
+public class Main extends MultiDexApplication {
   private static Context mContext;
 
   public static Context context() {
@@ -25,6 +26,7 @@ public class Main extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
+    MultiDex.install(this);
     mContext = getApplicationContext();
     Stetho.initializeWithDefaults(this);
   }

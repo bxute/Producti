@@ -36,4 +36,13 @@ public class PreferenceHelper {
     mEditor.putString("auth_token", auth_token);
     mEditor.apply();
   }
+
+  public void setAccountName(String accountName) {
+    mEditor.putString("account_name", accountName);
+    mEditor.apply();
+  }
+
+  public String getAccountName() {
+    return sharedPreferences.getString("account_name", "");
+  }
 }

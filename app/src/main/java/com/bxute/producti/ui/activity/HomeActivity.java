@@ -24,11 +24,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bxute.producti.R;
-import com.bxute.producti.sheets.SheetManager;
 import com.bxute.producti.ui.fragment.CalendarFragment;
 import com.bxute.producti.ui.fragment.DataCollectionFragment;
 import com.bxute.producti.ui.fragment.SettingsFragment;
 import com.bxute.producti.ui.fragment.StatsFragment;
+
+import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
   private final int METER_TAB = 0;
@@ -58,12 +59,7 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void testSheets() {
-    new Thread() {
-      @Override
-      public void run() {
-        new SheetManager().fetchSpreadSheets();
-      }
-    }.start();
+
   }
 
   private void initializeTabIcons() {
